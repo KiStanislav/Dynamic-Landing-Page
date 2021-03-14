@@ -62,9 +62,9 @@ function setBgGreet() {
   setTimeout(setBgGreet, 1000);
 }
 
-// Get Name
-function getName() {
-  name.textContent = localStorage.getItem('name') === null ? '[Enter Name]' : localStorage.getItem('name');
+//Get
+function getNameOrFocus(elem, key) {
+  elem.textContent = localStorage.getItem(key) === null ? '[Enter Name]' : localStorage.getItem(key);
 }
 
 // Set Name
@@ -74,15 +74,10 @@ function setName(e) {
     if (e.key === 'Enter') {
       localStorage.setItem('name', e.target.innerText);
       name.blur();
-    }
-  } else {
+    }else {
     localStorage.setItem('name', e.target.innerText);
   }
-}
-
-// Get Focus
-function getFocus() {
-  focus.textContent = localStorage.getItem('focus') === null ? '[Enter Focus]' : localStorage.getItem('focus');
+  }
 }
 
 // Set Focus
@@ -106,5 +101,5 @@ focus.addEventListener('blur', setFocus);
 // Run
 showTime();
 setBgGreet();
-getName();
-getFocus();
+getNameOrFocus(name, 'name');
+getNameOrFocus(focus, 'focus');
