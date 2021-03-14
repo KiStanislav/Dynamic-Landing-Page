@@ -82,7 +82,7 @@ function setName(e) {
 
 // Get Focus
 function getFocus() {
-  localStorage.getItem('focus') === null ? focus.textContent = '[Enter Focus]' : focus.textContent = localStorage.getItem('focus');
+  focus.textContent = localStorage.getItem('focus') === null ? '[Enter Focus]' : localStorage.getItem('focus');
 }
 
 // Set Focus
