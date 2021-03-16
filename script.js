@@ -55,7 +55,7 @@ function setBgGreet() {
 }
 
 function getNameOrFocus(elem, key) {
-  elem.textContent = localStorage.getItem(key) === null ? '[Enter Name]' : localStorage.getItem(key);
+  elem.textContent = localStorage.getItem(key) === null ? '[Enter]' : localStorage.getItem(key);
 }
 
 function setName(e) {
@@ -64,9 +64,9 @@ function setName(e) {
     if (e.key === 'Enter') {
       localStorage.setItem('name', e.target.innerText);
       name.blur();
-    }else {
+    }
+  } else {
     localStorage.setItem('name', e.target.innerText);
-  }
   }
 }
 
