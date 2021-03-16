@@ -1,9 +1,7 @@
-// DOM Elements
 const time = document.getElementById('time');
 const greeting = document.getElementById('greeting');
 const name = document.getElementById('name');
 const focus = document.getElementById('focus');
-const SHOW_AM_PM = true;
 const MIDNIGHT = 0;
 const NOON = 12;
 const ZERO = '0';
@@ -11,25 +9,19 @@ const SIX_HOURS = 6;
 const EIGHTEEN_HOURS = 18;
 const TWENTY_THREE_HOURS = 23;
 
-// Show Time
 function showTime() {
   const today = new Date();
   let hour = today.getHours();
   const min = today.getMinutes();
   const sec = today.getSeconds(); 
-
-  // Set AM or PM
   const amPm = hour >= NOON ? 'PM' : 'AM';
 
-  // 12hr Format
   hour !== MIDNIGHT ?  hour % 12 || NOON : MIDNIGHT; 
 
-  // Output Time
-  time.innerHTML = `${hour}<span>:</span>${addZero(min)}<span>:</span>${addZero(sec)} ${SHOW_AM_PM ? amPm : ''}`;
+  time.innerHTML = `${hour}<span>:</span>${addZero(min)}<span>:</span>${addZero(sec)} ${amPm}`;
   setTimeout(showTime, 1000);
 }
 
-// Add Zeros
 function addZero(n) {
   return (parseInt(n, 10) < 10 ? ZERO : '') + n;
 }
@@ -62,12 +54,10 @@ function setBgGreet() {
   setTimeout(setBgGreet, 1000);
 }
 
-//Get
 function getNameOrFocus(elem, key) {
   elem.textContent = localStorage.getItem(key) === null ? '[Enter Name]' : localStorage.getItem(key);
 }
 
-// Set Name
 function setName(e) {
   if (e.type === 'keypress') {
     // Make sure enter is pressed
@@ -80,7 +70,6 @@ function setName(e) {
   }
 }
 
-// Set Focus
 function setFocus(e) {
   if (e.type === 'keypress') {
     // Make sure enter is pressed
