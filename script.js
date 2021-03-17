@@ -55,7 +55,7 @@ function setBgGreet() {
 }
 
 function getNameOrFocus(elem, key) {
-  elem.textContent = localStorage.getItem(key) === null ? '[Enter]' : localStorage.getItem(key);
+  elem.textContent = localStorage.getItem(key) === null ? `[Enter ${key}]` : localStorage.getItem(key);
 }
 
 name.addEventListener('keypress', function(event) {
