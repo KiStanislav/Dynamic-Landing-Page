@@ -58,34 +58,27 @@ function getNameOrFocus(elem, key) {
   elem.textContent = localStorage.getItem(key) === null ? '[Enter]' : localStorage.getItem(key);
 }
 
-function setName(e) {
-  if (e.type === 'keypress') {
-    // Make sure enter is pressed
-    if (e.key === 'Enter') {
-      localStorage.setItem('name', e.target.innerText);
-      name.blur();
-    }
-  } else {
-    localStorage.setItem('name', e.target.innerText);
+name.addEventListener('keypress', function(event) {
+  if (event.key === 'Enter') {
+    localStorage.setItem('name', event.target.innerText);
+    name.blur();
   }
-}
+});
 
-function setFocus(e) {
-  if (e.type === 'keypress') {
-    // Make sure enter is pressed
-    if (e.key === 'Enter') {
-      localStorage.setItem('focus', e.target.innerText);
-      focus.blur();
-    }
-  } else {
-    localStorage.setItem('focus', e.target.innerText);
+name.addEventListener('blur', function(event) {
+  localStorage.setItem('name', event.target.innerText);
+});
+
+focus.addEventListener('keypress', function(event) {
+  if (event.key === 'Enter') {
+    localStorage.setItem('focus', event.target.innerText);
+    focus.blur();
   }
-}
+});
 
-name.addEventListener('keypress', setName);
-name.addEventListener('blur', setName);
-focus.addEventListener('keypress', setFocus);
-focus.addEventListener('blur', setFocus);
+focus.addEventListener('blur', function(event) {
+  localStorage.setItem('focus', event.target.innerText);
+});
 
 // Run
 showTime();
