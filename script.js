@@ -68,6 +68,12 @@ name.addEventListener('keypress', (event) => {
   }
 });
 
+focus.addEventListener('keypress', (event) => {
+  if (event.key === 'Enter') {
+    focus.blur();
+  }
+}); 
+
 // Run
 showTime();
 setBgGreet();
