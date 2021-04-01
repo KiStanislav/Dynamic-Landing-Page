@@ -58,26 +58,14 @@ function getNameOrFocus(elem, key) {
   elem.textContent = localStorage.getItem(key) === null ? `[Enter ${key}]` : localStorage.getItem(key);
 }
 
-name.addEventListener('keypress', function(event) {
+name.addEventListener('input', (event) => localStorage.setItem('name', event.target.innerText));
+
+focus.addEventListener('input', (event) => localStorage.setItem('focus', event.target.innerText));
+
+name.addEventListener('keypress', (event) => {
   if (event.key === 'Enter') {
-    localStorage.setItem('name', event.target.innerText);
     name.blur();
   }
-});
-
-name.addEventListener('blur', function(event) {
-  localStorage.setItem('name', event.target.innerText);
-});
-
-focus.addEventListener('keypress', function(event) {
-  if (event.key === 'Enter') {
-    localStorage.setItem('focus', event.target.innerText);
-    focus.blur();
-  }
-});
-
-focus.addEventListener('blur', function(event) {
-  localStorage.setItem('focus', event.target.innerText);
 });
 
 // Run
