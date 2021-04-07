@@ -26,56 +26,81 @@ function addZero(n) {
   return (parseInt(n, 10) < 10 ? ZERO : '') + n;
 }
 
-// Set Background and Greeting
+const DAY = {
+  MORNING: 'MORNING',
+  AFTERNOON: 'AFTERNOON',
+  EVENING: 'EVENING',
+  NIGHT: 'NIGHT'
+}
+
+const SETTINGS = {
+  [DAY.MORNING]: {
+    bgImage: "url('img/morning.jpg')",
+    text: 'Good morning, ',
+    color: 'rgb(0, 0, 0)'
+  },
+  [DAY.AFTERNOON]: {
+    bgImage: "url('img/afternoon.jpg')",
+    text: 'Good Afternoon, ',
+    color: 'rgb(0, 0, 0)'
+  },
+  [DAY.EVENING]: {
+    bgImage: "url('img/evening.jpg')",
+    text: 'Good Evening, ',
+    color: 'rgb(220, 220, 220)'
+  },
+  [DAY.NIGHT]: {
+    bgImage: "url('img/night.jpg')",
+    text: 'Good Night, ',
+    color: 'rgb(200, 200, 200)'
+  } 
+};
+
+function applySettings(key) {
+  const values = SETTINGS[key];
+  document.body.style.backgroundImage = values.bgImage;
+  greeting.textContent = values.text;
+  document.body.style.color = values.color;
+}
+
+function getCurrentSetting(hour) {
+  if (hour < NOON && hour >= SIX_HOURS) {
+    return DAY.MORNING;
+  } else if (hour < EIGHTEEN_HOURS && hour >= NOON) {
+    return DAY.AFTERNOON;
+  } else if (hour <= TWENTY_THREE_HOURS && hour >= EIGHTEEN_HOURS) {
+    return DAY.EVENING;
+  } else {
+    return DAY.NIGHT;
+  }
+};
+
 function setBgGreet() {
   const today = new Date();
   hour = today.getHours();
-  if (hour < NOON && hour >= SIX_HOURS) {
-    // Morning
-    document.body.style.backgroundImage = "url('img/morning.jpg')";
-    greeting.textContent = 'Good Morning, ';
-    document.body.style.color = 'rgb(0, 0, 0)'
-  } else if (hour < EIGHTEEN_HOURS && hour >= NOON) {
-    // Afternoon
-    document.body.style.backgroundImage = "url('img/afternoon.jpg')";
-    greeting.textContent = 'Good Afternoon, ';
-    document.body.style.color = 'rgb(0, 0, 0)'
-  } else if (hour <= TWENTY_THREE_HOURS && hour >= EIGHTEEN_HOURS) {
-    // Evening
-    document.body.style.backgroundImage = "url('img/evening.jpg')";
-    greeting.textContent = 'Good Evening, ';
-    document.body.style.color = 'rgb(255, 255, 255)';
-  } else {
-    // Night
-    document.body.style.backgroundImage = "url('img/night.jpg')";
-    greeting.textContent = 'Good Night, ';
-    document.body.style.color = 'rgb(255, 255, 255)';
-  }
+  const currentSetting = getCurrentSetting(hour);
+  applySettings(currentSetting);
   setTimeout(setBgGreet, 1000);
 }
 
-function getNameOrFocus(elem, key) {
+function setNameOrFocus(elem, key) {
   elem.textContent = localStorage.getItem(key) === null ? `[Enter ${key}]` : localStorage.getItem(key);
 }
 
-name.addEventListener('input', (event) => localStorage.setItem('name', event.target.innerText));
+const setValueToLs = (key) => (event) => localStorage.setItem(key, event.target.innerText);
 
-focus.addEventListener('input', (event) => localStorage.setItem('focus', event.target.innerText));
+name.addEventListener('input', setValueToLs('name'));
+focus.addEventListener('input', setValueToLs('focus'));
 
-name.addEventListener('keypress', (event) => {
-  if (event.key === 'Enter') {
-    name.blur();
-  }
-});
+const blurField = (key) => (event) => {
+  if (event.key === 'Enter') key.blur();
+}
 
-focus.addEventListener('keypress', (event) => {
-  if (event.key === 'Enter') {
-    focus.blur();
-  }
-}); 
+name.addEventListener('keypress', blurField(name));
+focus.addEventListener('keypress', blurField(focus));
 
 // Run
 showTime();
 setBgGreet();
-getNameOrFocus(name, 'name');
-getNameOrFocus(focus, 'focus');
+setNameOrFocus(name, 'name');
+setNameOrFocus(focus, 'focus');
