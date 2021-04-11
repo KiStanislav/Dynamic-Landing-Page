@@ -87,17 +87,19 @@ function setNameOrFocus(elem, key) {
   elem.textContent = localStorage.getItem(key) === null ? `[Enter ${key}]` : localStorage.getItem(key);
 }
 
-const setValueToLs = (key) => (event) => localStorage.setItem(key, event.target.innerText);
-
-name.addEventListener('input', setValueToLs('name'));
-focus.addEventListener('input', setValueToLs('focus'));
-
-const blurField = (key) => (event) => {
-  if (event.key === 'Enter') key.blur();
+function setValueToLs() {
+  localStorage.setItem(this.id, this.innerText);
 }
 
-name.addEventListener('keypress', blurField(name));
-focus.addEventListener('keypress', blurField(focus));
+name.addEventListener('input', setValueToLs);
+focus.addEventListener('input', setValueToLs);
+
+function blurField() {
+  if (event.key === 'Enter') this.blur();
+}
+
+name.addEventListener('keypress', blurField);
+focus.addEventListener('keypress', blurField);
 
 // Run
 showTime();
